@@ -33,7 +33,7 @@ module ``about discriminated unions`` =
 
         let choice = Mustard
 
-        AssertEquality (toColor choice) __
+        AssertEquality (toColor choice) "yellow"
 
         (* TRY IT: What happens if you remove a case from the above pattern 
                    match? *)

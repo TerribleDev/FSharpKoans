@@ -27,9 +27,11 @@ open FSharpKoans.Core
 //---------------------------------------------------------------
 [<Koan(Sort = 15)>]
 module ``about the stock example`` =
+    open System.Globalization
     
     let stockData =
-        [ "Date,Open,High,Low,Close,Volume,Adj Close";
+    //"Date,Open,High,Low,Close,Volume,Adj Close";
+        [ 
           "2012-03-30,32.40,32.41,32.04,32.26,31749400,32.26";
           "2012-03-29,32.06,32.19,31.81,32.12,37038500,32.12";
           "2012-03-28,32.52,32.70,32.04,32.19,41344800,32.19";
@@ -60,6 +62,10 @@ module ``about the stock example`` =
 
     [<Koan>]
     let YouGotTheAnswerCorrect() =
-        let result =  __
+        let result =
+            let parse x = System.Double.Parse(x, CultureInfo.InvariantCulture)
+            Seq.map (fun (x:string) -> x.Split(',')) stockData
+            |> Seq.maxBy (fun x -> abs( parse(x.[1]) - parse(x.[6]) ) )
+            
         
-        AssertEquality "2012-03-13" result
+        AssertEquality "2012-03-13" result.[0]
